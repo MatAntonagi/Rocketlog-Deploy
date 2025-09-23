@@ -7,7 +7,7 @@ import { sign } from "jsonwebtoken";
 import { z } from "zod"
 
 class SessionsController {
-  async create(request: Request, reponse: Response){
+  async create(request: Request, response: Response){
     const bodySchema = z.object({
       email: z.string().email(),
       password: z.string().min(7),
@@ -38,7 +38,7 @@ class SessionsController {
 
     const { password: hashedPassword, ...userWithoutPassword } = user
 
-    return reponse.json({ token, user: userWithoutPassword })
+    return response.json({ token, user: userWithoutPassword })
   }
 }
 
