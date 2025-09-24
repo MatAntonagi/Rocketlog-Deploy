@@ -32,6 +32,7 @@ class DeliveriesController {
 
     return response.json(deliveries)
   }
+
 }
 
 export { DeliveriesController }
