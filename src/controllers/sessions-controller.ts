@@ -3,7 +3,7 @@ import { AppError } from "@/utils/AppError";
 import { authConfig } from "@/configs/auth"
 import { prisma } from "@/database/prisma";
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken"
 import { z } from "zod"
 
 class SessionsController {
@@ -31,10 +31,12 @@ class SessionsController {
 
     const { secret, expiresIn } = authConfig.jwt
 
-    const token = sign({ role: user.role ?? "customer"}, secret, {
-      subject: user.id,
-      expiresIn
-    })
+    const token = jwt.sign({ role: user.role ?? "customer"}, 
+      secret, {
+        subject: user.id.toString(),
+        expiresIn
+      } as SignOptions
+    )
 
     const { password: hashedPassword, ...userWithoutPassword } = user
 
